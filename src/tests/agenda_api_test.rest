@@ -1,0 +1,15 @@
+### Listar profissionais
+GET http://localhost:3000/profissionais
+
+###
+
+### Criar profissional
+POST http://localhost:3000/profissionais
+Content-Type: application/json
+
+{
+    "nome": "João",
+    "especialidade": "Barbeiro",
+    "telefone": "54999999999",
+    "ativo": true
+}

@@ -1,10 +1,10 @@
-const express = require('express');
-const app = express();
-app.use(express.json());
-app.get('/products', (req, res) => {
- res.json([{ id: 1, name: 'Produto Exemplo' }]);
-});
-const PORT = 3000;
+
+require("dotenv").config();
+
+const app = require("./src/app");
+
+const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
- console.log(`Servidor rodando na porta ${PORT}`);
+    console.log(`Servidor rodando na porta ${PORT}`);
 });
