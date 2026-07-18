@@ -19,8 +19,32 @@ async function criar(profissional) {
     return resultado.insertId;
 }
 
+async function atualizar(id, profissional) {
+    const { nome, especialidade, telefone, ativo } = profissional;
+
+    const [resultado] = await db.query(
+        `UPDATE profissionais
+         SET nome = ?, especialidade = ?, telefone = ?, ativo = ?
+         WHERE id = ?`,
+        [nome, especialidade, telefone, ativo, id]
+    );
+
+    return resultado.affectedRows;
+}
+
+async function excluir(id) {
+    const [resultado] = await db.query(
+        "DELETE FROM profissionais WHERE id = ?",
+        [id]
+    );
+
+    return resultado.affectedRows;
+}
+
 
 module.exports = {
     listar, 
-    criar
+    criar,
+    atualizar,
+    excluir
 };

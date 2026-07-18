@@ -13,3 +13,21 @@ Content-Type: application/json
     "telefone": "54999999999",
     "ativo": true
 }
+
+###
+
+### Atualizar profissional
+PUT http://localhost:3000/profissionais/2
+Content-Type: application/json
+
+{
+    "nome": "João Atualizado",
+    "especialidade": "Barbeiro e Cabeleireiro",
+    "telefone": "54988887777",
+    "ativo": true
+}
+
+###
+
+### Excluir profissional
+DELETE http://localhost:3000/profissionais/2

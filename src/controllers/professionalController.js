@@ -25,7 +25,42 @@ async function criar(req, res) {
     }
 }
 
+async function atualizar(req, res) {
+    try {
+        const id = req.params.id;
+
+        await professionalService.atualizarProfissional(id, req.body);
+
+        res.json({
+            mensagem: "Profissional atualizado com sucesso!"
+        });
+    } catch (erro) {
+        res.status(erro.statusCode || 500).json({
+            erro: erro.message
+        });
+    }
+}
+
+async function excluir(req, res) {
+    try {
+        const id = req.params.id;
+
+        await professionalService.excluirProfissional(id);
+
+        res.json({
+            mensagem: "Profissional excluído com sucesso!"
+        });
+
+    } catch (erro) {
+        res.status(erro.statusCode || 500).json({
+            erro: erro.message
+        });
+    }
+}
+
 module.exports = {
     listar,
-    criar
+    criar,
+    atualizar,
+    excluir
 };
