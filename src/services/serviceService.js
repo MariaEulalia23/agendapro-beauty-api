@@ -1,23 +1,81 @@
 const serviceModel = require("../models/serviceModel");
 
-async function listarServicos() {
-    return await serviceModel.listar();
-}
+function validarServico(servico) {
+    const { area_id, nome, duracao_min, preco } = servico;
 
-async function criarServico(dados) {
-
-    if (!dados.nome || !dados.area_id) {
-        const erro = new Error("Nome e área são obrigatórios.");
+    if (
+        area_id === undefined ||
+        nome === undefined ||
+        duracao_min === undefined ||
+        preco === undefined
+    ) {
+        const erro = new Error(
+            "Área, nome, duração e preço são obrigatórios."
+        );
         erro.statusCode = 400;
         throw erro;
     }
 
-    const id = await serviceModel.criar(dados);
+    if (!Number.isInteger(area_id) || area_id <= 0) {
+        const erro = new Error(
+            "O campo area_id deve ser um número inteiro positivo."
+        );
+        erro.statusCode = 400;
+        throw erro;
+    }
 
-    return id;
+    if (typeof nome !== "string" || nome.trim() === "") {
+        const erro = new Error(
+            "O nome deve ser um texto válido."
+        );
+        erro.statusCode = 400;
+        throw erro;
+    }
+
+    if (!Number.isInteger(duracao_min) || duracao_min <= 0) {
+        const erro = new Error(
+            "A duração deve ser um número inteiro positivo."
+        );
+        erro.statusCode = 400;
+        throw erro;
+    }
+
+    if (typeof preco !== "number" || preco < 0) {
+        const erro = new Error(
+            "O preço deve ser um número maior ou igual a zero."
+        );
+        erro.statusCode = 400;
+        throw erro;
+    }
+}
+
+async function listarServicos(areaId) {
+    if (areaId !== undefined) {
+        const areaConvertida = Number(areaId);
+
+        if (!Number.isInteger(areaConvertida) || areaConvertida <= 0) {
+            const erro = new Error(
+                "O ID da área deve ser um número inteiro positivo."
+            );
+            erro.statusCode = 400;
+            throw erro;
+        }
+
+        return await serviceModel.listar(areaConvertida);
+    }
+
+    return await serviceModel.listar();
+}
+
+async function criarServico(servico) {
+    validarServico(servico);
+
+    return await serviceModel.criar(servico);
 }
 
 async function atualizarServico(id, servico) {
+    validarServico(servico);
+
     const linhasAfetadas = await serviceModel.atualizar(id, servico);
 
     if (linhasAfetadas === 0) {
@@ -37,6 +95,8 @@ async function excluirServico(id) {
         erro.statusCode = 404;
         throw erro;
     }
+
+    return linhasAfetadas;
 }
 
 module.exports = {

@@ -4,17 +4,17 @@ async function listar(req, res) {
 
     try {
 
-        const servicos = await serviceService.listarServicos();
+        const areaId = req.query.area_id;
+        const servicos = await serviceService.listarServicos(areaId);
 
         res.json(servicos);
 
-    } catch (erro) {
+   } catch (erro) {
+    res.status(erro.statusCode || 500).json({
+        erro: erro.message
+    });
+}
 
-        res.status(500).json({
-            erro: erro.message
-        });
-
-    }
 
 }
 

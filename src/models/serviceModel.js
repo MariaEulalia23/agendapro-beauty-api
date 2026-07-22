@@ -1,6 +1,15 @@
 const db = require("../config/database");
 
-async function listar() {
+async function listar(areaId) {
+    if (areaId) {
+        const [rows] = await db.query(
+            "SELECT * FROM servicos WHERE area_id = ?",
+            [areaId]
+        );
+
+        return rows;
+    }
+
     const [rows] = await db.query("SELECT * FROM servicos");
     return rows;
 }

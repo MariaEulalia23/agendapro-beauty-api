@@ -69,3 +69,61 @@ Content-Type: application/json
 
 ### Excluir serviço
 DELETE http://localhost:3000/servicos/2
+
+
+
+
+
+### Filtrar serviços por área
+GET http://localhost:3000/servicos?area_id=1
+
+### Filtro inválido — deve retornar 400
+GET http://localhost:3000/servicos?area_id=abc
+
+
+### Serviço sem nome — deve retornar 400
+POST http://localhost:3000/servicos
+Content-Type: application/json
+
+{
+    "area_id": 1,
+    "duracao_min": 45,
+    "preco": 55.00
+}
+
+### Atualizar serviço inexistente — deve retornar 404
+PUT http://localhost:3000/servicos/99999
+Content-Type: application/json
+
+{
+    "area_id": 1,
+    "nome": "Serviço inexistente",
+    "duracao_min": 45,
+    "preco": 55.00
+}
+
+### Excluir serviço inexistente — deve retornar 404
+DELETE http://localhost:3000/servicos/99999
+
+
+### Profissional sem telefone — deve retornar 400
+POST http://localhost:3000/profissionais
+Content-Type: application/json
+
+{
+    "nome": "Teste",
+    "especialidade": "Cabeleireiro",
+    "ativo": true
+}
+
+### Atualizar profissional inexistente — deve retornar 404
+PUT http://localhost:3000/profissionais/99999
+Content-Type: application/json
+
+{
+    "nome": "Teste",
+    "especialidade": "Cabeleireiro",
+    "telefone": "54999999999",
+    "ativo": true
+}
+
