@@ -31,3 +31,41 @@ Content-Type: application/json
 
 ### Excluir profissional
 DELETE http://localhost:3000/profissionais/2
+
+
+
+###
+
+### Listar serviços
+GET http://localhost:3000/servicos
+
+###
+
+### Criar serviço
+POST http://localhost:3000/servicos
+Content-Type: application/json
+
+{
+    "area_id": 1,
+    "nome": "Corte Masculino",
+    "duracao_min": 45,
+    "preco": 55.00
+}
+
+###
+
+### Atualizar serviço
+PUT http://localhost:3000/servicos/2
+Content-Type: application/json
+
+{
+    "area_id": 1,
+    "nome": "Corte Masculino Atualizado",
+    "duracao_min": 60,
+    "preco": 65.00
+}
+
+###
+
+### Excluir serviço
+DELETE http://localhost:3000/servicos/2
